@@ -1,0 +1,19 @@
+# Ignorar los módulos de Node.js en el backend
+/backend/node_modules/
+
+# Ignorar los archivos de configuración de los editores (Visual Studio Code, por ejemplo)
+.vscode/
+
+# Ignorar archivos específicos del sistema operativo (por ejemplo, archivos de macOS o Windows)
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de log
+*.log
+
+# Ignorar el archivo package-lock.json en caso de que no quieras versionarlo (aunque generalmente se recomienda tenerlo)
+package-lock.json
+
+# Ignorar otras carpetas generadas de manera temporal o de construcción
+/dist
+/build
