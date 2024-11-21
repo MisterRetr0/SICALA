@@ -73,21 +73,16 @@ function validateForm(event) {
 
 // Al enviar el formulario de login
 loginForm.addEventListener('submit', async (e) => {
-  // Primero, validamos el formulario
   const isValid = validateForm(e);
-  if (!isValid) return; // Si la validación falla, no continuamos
+  if (!isValid) return;
 
-  // Si la validación es exitosa, procedemos con el envío
   const email = emailInput.value;
   const password = passwordInput.value;
 
   // Mostrar el cargando
   showLoading();
-  postLoginContainer.classList.add('hidden');
-  accessButton.classList.add('hidden');
 
   try {
-    console.log('Enviando solicitud de login...');
     // Enviar solicitud de login al backend
     const response = await fetch(`${BACKEND_URL}/login`, {
       method: 'POST',
@@ -100,14 +95,12 @@ loginForm.addEventListener('submit', async (e) => {
 
     const data = await response.json();
 
-    if (response.ok && !data.showPostLogin) {
-      // Si el login fue exitoso, mostramos el contenedor post-login
+    if (response.ok && data.showPostLogin) {
+      // Si el login fue exitoso, mostramos la página post-login
       postLoginContainer.classList.remove('hidden');
       accessButton.classList.remove('hidden');
       logoutButton.classList.remove('hidden');
-
-      // Ocultar el formulario de login después del login exitoso
-      loginContainer.classList.add('hidden');
+      loginContainer.classList.add('hidden');  // Ocultar el login
     } else {
       alert('Error al realizar login: ' + data.message);
     }
