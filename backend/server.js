@@ -3,14 +3,19 @@ const puppeteer = require('puppeteer');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+// Definimos las URLs directamente en el código
+const FRONTEND_URL = 'https://sicala-8qlk.onrender.com';  // URL de tu frontend
+const BACKEND_URL = 'https://sicalaback.onrender.com';    // URL de tu backend
+
+const PORT = 3000;  // Puerto donde corre el backend
 
 app.use(express.json());
 app.use(cookieParser());
 
-// Configuración de CORS
+// Configuración de CORS: Usamos la URL del frontend directamente
 app.use(cors({
-  origin: 'http://localhost:5500',  // URL del frontend
+  origin: FRONTEND_URL,  // URL del frontend
   methods: ['GET', 'POST'],
   credentials: true,  // Permite que las cookies se envíen y reciban
 }));
@@ -155,5 +160,5 @@ app.post('/logout', async (req, res) => {
 
 // Iniciamos el servidor
 app.listen(PORT, () => {
-  console.log(`Backend corriendo en http://localhost:${PORT}`);
+  console.log(`Backend corriendo en ${BACKEND_URL}`);
 });

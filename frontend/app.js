@@ -1,4 +1,6 @@
-// Variables de elementos HTML
+// Definimos la URL del backend directamente en el código
+const BACKEND_URL = 'https://sicalaback.onrender.com';  // URL de tu backend
+
 const loginForm = document.getElementById('loginForm');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -32,18 +34,6 @@ function showLoading() {
 function hideLoading() {
   loadingDiv.classList.add('hidden');
   clearInterval(loadingInterval); // Detener la animación de puntos
-}
-
-function updateLoadingMessage() {
-  loadingText.textContent = loadingMessages[loadingMessageIndex];
-  loadingMessageIndex = (loadingMessageIndex + 1) % loadingMessages.length;
-
-  // Cambio dinámico de los puntos suspensivos
-  let dotsCount = 0;
-  loadingInterval = setInterval(() => {
-    loadingText.textContent = `${loadingMessages[loadingMessageIndex]}${'.'.repeat(dotsCount)}`;
-    dotsCount = (dotsCount + 1) % 4; // Controla el número de puntos (1, 2, 3, 4)
-  }, 500);  // Cambiar el texto cada 500ms
 }
 
 // Función de validación
@@ -99,7 +89,7 @@ loginForm.addEventListener('submit', async (e) => {
   try {
     console.log('Enviando solicitud de login...');
     // Enviar solicitud de login al backend
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch(`${BACKEND_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,60 +118,4 @@ loginForm.addEventListener('submit', async (e) => {
     // Ocultar el cargando
     hideLoading();
   }
-});
-
-// Función para realizar el autologin a Chami y mostrar la página post-login
-async function accessChami() {
-  console.log('Intentando acceder a Chami...');
-  showLoading();  // Mostrar mensaje de carga
-
-  try {
-    // Solicitar al backend que realice el autologin
-    const response = await fetch('http://localhost:3000/autologin', {
-      method: 'POST',
-      credentials: 'include',  // Asegura que las cookies de sesión se envíen
-    });
-
-    const data = await response.json();
-    console.log('Respuesta del backend:', data); // Ver la respuesta que llega del backend
-
-    if (response.ok && data.showPostLogin) {
-      // Si el login fue exitoso, mostramos el contenido post-login en la nueva ventana
-      alert('Acceso a Chami exitoso');
-    } else {
-      alert('Error al realizar el autologin');
-    }
-  } catch (error) {
-    console.error('Error de red al acceder a Chami:', error);
-    alert('Error al acceder a Chami');
-  } finally {
-    hideLoading();
-  }
-}
-
-// Cargar el evento al hacer click en el botón de acceder a Chami
-accessButton.addEventListener('click', async () => {
-  console.log('Botón de acceso a Chami presionado...');
-  await accessChami();  // Llamar a la función accessChami
-});
-
-// Cerrar sesión
-logoutButton.addEventListener('click', async () => {
-  console.log('Cerrando sesión...');
-  showLoading(); // Mostrar pantalla de carga durante el cierre de sesión
-
-  const response = await fetch('http://localhost:3000/logout', {
-    method: 'POST',
-    credentials: 'include',
-  });
-
-  const data = await response.json();
-  alert(data.message);
-
-  // Volver a mostrar el formulario de login
-  postLoginContainer.classList.add('hidden');
-  accessButton.classList.add('hidden');
-  loginContainer.classList.remove('hidden');
-
-  hideLoading(); // Ocultar la pantalla de carga después de cerrar sesión
 });
