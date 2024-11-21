@@ -5,8 +5,8 @@ const cors = require('cors');
 const app = express();
 
 // Definimos las URLs directamente en el código
-const FRONTEND_URL = 'https://sicala-8qlk.onrender.com';  // URL de tu frontend
-const BACKEND_URL = 'https://sicalaback.onrender.com';    // URL de tu backend
+const FRONTEND_URL = 'https://sicala-8qlk.onrender.com';  
+const BACKEND_URL = 'https://sicalaback.onrender.com';   
 
 const PORT = 3000;  // Puerto donde corre el backend
 
