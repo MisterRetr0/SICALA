@@ -1,6 +1,4 @@
-// Definimos la URL del backend directamente en el código
-const BACKEND_URL = 'https://sicalaback.onrender.com';  // URL de tu backend
-
+// Variables de elementos HTML
 const loginForm = document.getElementById('loginForm');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -26,14 +24,29 @@ const loadingMessages = [
   'Gracias por preferirnos',
 ];
 
+// Función para mostrar el mensaje de carga
 function showLoading() {
   loadingDiv.classList.remove('hidden');
   updateLoadingMessage();  // Mostrar el primer mensaje de carga
 }
 
+// Función para ocultar el mensaje de carga
 function hideLoading() {
   loadingDiv.classList.add('hidden');
   clearInterval(loadingInterval); // Detener la animación de puntos
+}
+
+// Función para actualizar el mensaje de carga con animación de puntos
+function updateLoadingMessage() {
+  loadingText.textContent = loadingMessages[loadingMessageIndex];
+  loadingMessageIndex = (loadingMessageIndex + 1) % loadingMessages.length;
+
+  // Cambio dinámico de los puntos suspensivos
+  let dotsCount = 0;
+  loadingInterval = setInterval(() => {
+    loadingText.textContent = `${loadingMessages[loadingMessageIndex]}${'.'.repeat(dotsCount)}`;
+    dotsCount = (dotsCount + 1) % 4; // Controla el número de puntos (1, 2, 3, 4)
+  }, 500);  // Cambiar el texto cada 500ms
 }
 
 // Función de validación
@@ -73,18 +86,23 @@ function validateForm(event) {
 
 // Al enviar el formulario de login
 loginForm.addEventListener('submit', async (e) => {
+  // Primero, validamos el formulario
   const isValid = validateForm(e);
-  if (!isValid) return;
+  if (!isValid) return; // Si la validación falla, no continuamos
 
+  // Si la validación es exitosa, procedemos con el envío
   const email = emailInput.value;
   const password = passwordInput.value;
 
   // Mostrar el cargando
   showLoading();
+  postLoginContainer.classList.add('hidden');
+  accessButton.classList.add('hidden');
 
   try {
+    console.log('Enviando solicitud de login...');
     // Enviar solicitud de login al backend
-    const response = await fetch(`${BACKEND_URL}/login`, {
+    const response = await fetch('https://sicalaback.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,12 +113,14 @@ loginForm.addEventListener('submit', async (e) => {
 
     const data = await response.json();
 
-    if (response.ok && data.showPostLogin) {
-      // Si el login fue exitoso, mostramos la página post-login
+    if (response.ok && !data.showPostLogin) {
+      // Si el login fue exitoso, mostramos el contenedor post-login
       postLoginContainer.classList.remove('hidden');
       accessButton.classList.remove('hidden');
       logoutButton.classList.remove('hidden');
-      loginContainer.classList.add('hidden');  // Ocultar el login
+
+      // Ocultar el formulario de login después del login exitoso
+      loginContainer.classList.add('hidden');
     } else {
       alert('Error al realizar login: ' + data.message);
     }
@@ -111,4 +131,60 @@ loginForm.addEventListener('submit', async (e) => {
     // Ocultar el cargando
     hideLoading();
   }
+});
+
+// Función para realizar el autologin a Chami y mostrar la página post-login
+async function accessChami() {
+  console.log('Intentando acceder a Chami...');
+  showLoading();  // Mostrar mensaje de carga
+
+  try {
+    // Solicitar al backend que realice el autologin
+    const response = await fetch('https://sicalaback.onrender.com/autologin', {
+      method: 'POST',
+      credentials: 'include',  // Asegura que las cookies de sesión se envíen
+    });
+
+    const data = await response.json();
+    console.log('Respuesta del backend:', data); // Ver la respuesta que llega del backend
+
+    if (response.ok && data.showPostLogin) {
+      // Si el login fue exitoso, mostramos el contenido post-login en la nueva ventana
+      alert('Acceso a Chami exitoso');
+    } else {
+      alert('Error al realizar el autologin');
+    }
+  } catch (error) {
+    console.error('Error de red al acceder a Chami:', error);
+    alert('Error al acceder a Chami');
+  } finally {
+    hideLoading();
+  }
+}
+
+// Cargar el evento al hacer click en el botón de acceder a Chami
+accessButton.addEventListener('click', async () => {
+  console.log('Botón de acceso a Chami presionado...');
+  await accessChami();  // Llamar a la función accessChami
+});
+
+// Cerrar sesión
+logoutButton.addEventListener('click', async () => {
+  console.log('Cerrando sesión...');
+  showLoading(); // Mostrar pantalla de carga durante el cierre de sesión
+
+  const response = await fetch('https://sicalaback.onrender.com/logout', {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  const data = await response.json();
+  alert(data.message);
+
+  // Volver a mostrar el formulario de login
+  postLoginContainer.classList.add('hidden');
+  accessButton.classList.add('hidden');
+  loginContainer.classList.remove('hidden');
+
+  hideLoading(); // Ocultar la pantalla de carga después de cerrar sesión
 });
