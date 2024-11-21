@@ -35,7 +35,7 @@ app.post('/login', async (req, res) => {
   try {
     // Lanzamos Puppeteer en modo invisible (headless)
     browser = await puppeteer.launch({
-      headless: true,  // Modo invisible
+      headless: false,  // Modo invisible
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
