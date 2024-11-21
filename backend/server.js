@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const robot = require('robotjs');  // Importar robotjs para obtener el tamaño de la pantalla
 
 app.use(express.json());
 app.use(cookieParser());
@@ -67,7 +66,6 @@ app.post('/login', async (req, res) => {
 });
 
 // Ruta para acceder a la página post-login con navegador visible
-
 app.post('/autologin', async (req, res) => {
   console.log('Iniciando solicitud de autologin...');
 
@@ -124,14 +122,10 @@ app.post('/autologin', async (req, res) => {
 
     page = await browser.newPage();
 
-    // Obtener las dimensiones de la pantalla completa usando robotjs
-    const screenSize = robot.getScreenSize();  // Obtener el tamaño de la pantalla
-    const { width, height } = screenSize;      // Extraer ancho y alto
+    // Establecer un viewport de tamaño predeterminado (ejemplo: 1920x1080)
+    await page.setViewport({ width: 1920, height: 1080 });
 
-    // Establecer el viewport al tamaño máximo de la pantalla
-    await page.setViewport({ width, height });
-
-    // Restaurar cookies
+    // Restaurar las cookies
     await page.setCookie(...cookies);
 
     // Ahora que hemos restaurado las cookies, podemos acceder a la URL post-login
@@ -147,8 +141,6 @@ app.post('/autologin', async (req, res) => {
     res.status(500).json({ message: 'Error al acceder a Chami', error: error.message });
   }
 });
-
-
 
 // Ruta para cerrar sesión
 app.post('/logout', async (req, res) => {
