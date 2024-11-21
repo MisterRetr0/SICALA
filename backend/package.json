@@ -19,5 +19,8 @@
     "express": "^4.21.1",
     "http-proxy-middleware": "^3.0.3",
     "puppeteer": "^23.8.0"
+  },
+    "engines": {
+    "node": "20.12.2"
   }
 }
