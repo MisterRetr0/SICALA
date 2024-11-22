@@ -179,7 +179,5 @@ app.post('/logout', async (req, res) => {
 // Iniciamos el servidor
 app.listen(PORT, () => {
   console.log(`Backend corriendo en ${BACKEND_URL}`);
-  // Verificar la ruta de Chrome
-  console.log('Ruta de instalación de Chrome:', puppeteer.executablePath());
 
 });
