@@ -6,37 +6,40 @@ const loadingDiv = document.getElementById('loading');
 const loadingText = document.getElementById('loadingText');
 const loginContainer = document.getElementById('loginContainer');
 const postLoginContainer = document.getElementById('postLoginContainer');
-const accessButton = document.getElementById('accessButton');
+const accessButtonChami = document.getElementById('accessButtonChami');
+const accessButtonPEV = document.getElementById('accessButtonPEV');
+const accessButtonMantis = document.getElementById('accessButtonMantis');
+const accessButtonServo = document.getElementById('accessButtonServo');
 const logoutButton = document.getElementById('logoutButton');
 const chamiLoadingMessage = document.getElementById('chamiLoadingMessage');
 
 // Inicialmente, el contenedor post-login y el botón "Acceder a Chami" deben estar ocultos
 postLoginContainer.classList.add('hidden');
-accessButton.classList.add('hidden');
+accessButtonChami.classList.add('hidden');
+accessButtonPEV.classList.add('hidden');
+accessButtonMantis.classList.add('hidden');
+accessButtonServo.classList.add('hidden');
 chamiLoadingMessage.classList.add('hidden');
 
 // Variables para controlar el estado de carga
 let loadingInterval;
 let loadingMessageIndex = 0;
 const loadingMessages = [
-  'Cargando...',
+  'Cargando',
   'Ve por un café :D',
   'Gracias por preferirnos',
 ];
 
-// Función para mostrar el mensaje de carga
 function showLoading() {
   loadingDiv.classList.remove('hidden');
   updateLoadingMessage();  // Mostrar el primer mensaje de carga
 }
 
-// Función para ocultar el mensaje de carga
 function hideLoading() {
   loadingDiv.classList.add('hidden');
   clearInterval(loadingInterval); // Detener la animación de puntos
 }
 
-// Función para actualizar el mensaje de carga con animación de puntos
 function updateLoadingMessage() {
   loadingText.textContent = loadingMessages[loadingMessageIndex];
   loadingMessageIndex = (loadingMessageIndex + 1) % loadingMessages.length;
@@ -97,12 +100,15 @@ loginForm.addEventListener('submit', async (e) => {
   // Mostrar el cargando
   showLoading();
   postLoginContainer.classList.add('hidden');
-  accessButton.classList.add('hidden');
+  accessButtonChami.classList.add('hidden');
+  accessButtonPEV.classList.add('hidden');
+  accessButtonMantis.classList.add('hidden');
+  accessButtonServo.classList.add('hidden');
 
   try {
     console.log('Enviando solicitud de login...');
     // Enviar solicitud de login al backend
-    const response = await fetch('https://sicalaback.onrender.com/login', {
+    const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -116,7 +122,10 @@ loginForm.addEventListener('submit', async (e) => {
     if (response.ok && !data.showPostLogin) {
       // Si el login fue exitoso, mostramos el contenedor post-login
       postLoginContainer.classList.remove('hidden');
-      accessButton.classList.remove('hidden');
+      accessButtonChami.classList.remove('hidden');
+      accessButtonPEV.classList.remove('hidden');
+      accessButtonMantis.classList.remove('hidden');
+      accessButtonServo.classList.remove('hidden');
       logoutButton.classList.remove('hidden');
 
       // Ocultar el formulario de login después del login exitoso
@@ -140,7 +149,7 @@ async function accessChami() {
 
   try {
     // Solicitar al backend que realice el autologin
-    const response = await fetch('https://sicalaback.onrender.com/autologin', {
+    const response = await fetch('http://localhost:3000/autologin', {
       method: 'POST',
       credentials: 'include',  // Asegura que las cookies de sesión se envíen
     });
@@ -163,7 +172,7 @@ async function accessChami() {
 }
 
 // Cargar el evento al hacer click en el botón de acceder a Chami
-accessButton.addEventListener('click', async () => {
+accessButtonChami.addEventListener('click', async () => {
   console.log('Botón de acceso a Chami presionado...');
   await accessChami();  // Llamar a la función accessChami
 });
@@ -173,7 +182,7 @@ logoutButton.addEventListener('click', async () => {
   console.log('Cerrando sesión...');
   showLoading(); // Mostrar pantalla de carga durante el cierre de sesión
 
-  const response = await fetch('https://sicalaback.onrender.com/logout', {
+  const response = await fetch('http://localhost:3000/logout', {
     method: 'POST',
     credentials: 'include',
   });
@@ -183,7 +192,10 @@ logoutButton.addEventListener('click', async () => {
 
   // Volver a mostrar el formulario de login
   postLoginContainer.classList.add('hidden');
-  accessButton.classList.add('hidden');
+  accessButtonChami.classList.add('hidden');
+  accessButtonPEV.classList.add('hidden');
+  accessButtonMantis.classList.add('hidden');
+  accessButtonServo.classList.add('hidden');
   loginContainer.classList.remove('hidden');
 
   hideLoading(); // Ocultar la pantalla de carga después de cerrar sesión
