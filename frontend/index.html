@@ -7,19 +7,30 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
-  <h1 style="text-align: center;">SICALA</h1>
+
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+  <div class="emoji">*</div>
+    
+  <h1 style="font-size: 40px; margin-bottom: 100px; margin-top: 10px;">SICALA</h1>
+  <img src="img/LOGOCAT1.png" alt="">
+
+   
 
   <div id="loading" class="hidden">
     <div class="spinner"></div>
-    <p id="loadingText">Cargando...</p>
+    <p id="loadingText">Cargando</p>
   </div>
 
   <!-- Contenedor para el login -->
   <div id="loginContainer">
     <!-- Formulario de login -->
     <form id="loginForm">
-        <h1>Login</h1>
+        <h2>Iniciar sesión</h2>
         <label for="email">Email:</label>
         <input type="email" id="email" required>
         <label for="password">Contraseña:</label>
@@ -32,7 +43,10 @@
 
   <!-- Contenedor para los botones post-login -->
   <div id="postLoginContainer" class="hidden">
-    <button id="accessButton" class="hidden">Acceder a Chami</button>
+    <button id="accessButtonChami" class="hidden">Acceder a Chami</button>
+    <a target="_blank" href="https://pevres.ucp.edu.co/"><button id="accessButtonPEV" class="hidden">Acceder a PEVRES</button></a>
+    <a target="_blank" href="https://mantis.ucp.edu.co/"><button id="accessButtonMantis" class="hidden">Acceder a Mantis</button></a>
+    <a target="_blank" href="https://servo.ucp.edu.co/"><button id="accessButtonServo" class="hidden">Acceder a Servo</button></a>
     <div class="apps-container hidden">
       <div id="appsList"></div>
     </div>
