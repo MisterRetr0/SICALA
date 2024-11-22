@@ -29,6 +29,9 @@ let credentials = null;  // Variable para guardar las credenciales del usuario
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
+  // Verificar la ruta de Chrome
+  console.log('Ruta de instalación de Chrome:', puppeteer.executablePath());
+
   if (!email || !password) {
     return res.status(400).json({ message: 'Email y contraseña son requeridos' });
   }
