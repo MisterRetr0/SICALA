@@ -16,7 +16,8 @@ app.use(cookieParser());
 // Configuración de CORS: Usamos la URL del frontend directamente
 app.use(cors({
   origin: FRONTEND_URL,  // URL del frontend
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,  // Permite que las cookies se envíen y reciban
 }));
 
