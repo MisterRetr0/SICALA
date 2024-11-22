@@ -36,7 +36,7 @@ app.post('/login', async (req, res) => {
   try {
     // Lanzamos Puppeteer en modo invisible (headless)
     browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome-stable', 
+      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/', 
       headless: false,  // Modo invisible
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
@@ -84,7 +84,7 @@ app.post('/autologin', async (req, res) => {
   try {
     // Lanzamos Puppeteer en modo headless (invisible) sin desactivar la seguridad
     browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome-stable',
+      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/',
       headless: true,  // Modo invisible
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
@@ -124,7 +124,7 @@ app.post('/autologin', async (req, res) => {
 
     // Lanzamos Puppeteer en modo visible (ahora con dimensiones personalizadas)
     browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome-stable',
+      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/',
       headless: false,  // Modo visible
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
