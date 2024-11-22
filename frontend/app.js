@@ -108,7 +108,7 @@ loginForm.addEventListener('submit', async (e) => {
   try {
     console.log('Enviando solicitud de login...');
     // Enviar solicitud de login al backend
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch('https://sicalaback.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ async function accessChami() {
 
   try {
     // Solicitar al backend que realice el autologin
-    const response = await fetch('http://localhost:3000/autologin', {
+    const response = await fetch('https://sicalaback.onrender.com/autologin', {
       method: 'POST',
       credentials: 'include',  // Asegura que las cookies de sesión se envíen
     });
@@ -182,7 +182,7 @@ logoutButton.addEventListener('click', async () => {
   console.log('Cerrando sesión...');
   showLoading(); // Mostrar pantalla de carga durante el cierre de sesión
 
-  const response = await fetch('http://localhost:3000/logout', {
+  const response = await fetch('https://sicalaback.onrender.com/logout', {
     method: 'POST',
     credentials: 'include',
   });
