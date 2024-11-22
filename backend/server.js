@@ -38,7 +38,13 @@ app.post('/login', async (req, res) => {
     browser = await puppeteer.launch({
       executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/', 
       headless: false,  // Modo invisible
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-gpu',
+      '--headless',
+      '--disable-dev-shm-usage'
+      ]
     });
 
     page = await browser.newPage();
@@ -86,7 +92,13 @@ app.post('/autologin', async (req, res) => {
     browser = await puppeteer.launch({
       executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/',
       headless: true,  // Modo invisible
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--headless',
+        '--disable-dev-shm-usage'
+      ]
     });
 
     page = await browser.newPage();
@@ -126,7 +138,13 @@ app.post('/autologin', async (req, res) => {
     browser = await puppeteer.launch({
       executablePath: '/opt/render/.cache/puppeteer/chrome/linux-xxxx/',
       headless: false,  // Modo visible
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--headless',
+        '--disable-dev-shm-usage'
+      ]
     });
 
     page = await browser.newPage();
