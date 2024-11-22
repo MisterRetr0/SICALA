@@ -4,6 +4,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
 
+// Verificar la ruta de Chrome
+console.log('Ruta de instalación de Chrome:', puppeteer.executablePath());
+
 // Definimos las URLs directamente en el código
 const FRONTEND_URL = 'https://sicala-8qlk.onrender.com';  
 const BACKEND_URL = 'https://sicalaback.onrender.com';   
@@ -28,9 +31,6 @@ let credentials = null;  // Variable para guardar las credenciales del usuario
 // Ruta para hacer login invisible
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
-  // Verificar la ruta de Chrome
-  console.log('Ruta de instalación de Chrome:', puppeteer.executablePath());
 
   if (!email || !password) {
     return res.status(400).json({ message: 'Email y contraseña son requeridos' });
